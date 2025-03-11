@@ -10,8 +10,8 @@ export default function page() {
   ]
 
   const fieldsList = fields.map(field =>
-    <fieldset key={field.label} className="fieldset w-72 my-0 py-0">
-      <legend className="fieldset-legend">{field.label}</legend>
+    <fieldset key={field.label} className="fieldset w-72 my-0 py-0 pb-2">
+      <legend className="fieldset-legend py-0 pb-2">{field.label}</legend>
       <input type="text" className="input" placeholder="Type here" />
     </fieldset>)
 
@@ -22,10 +22,10 @@ export default function page() {
           <div>
             <p>Sign up section</p>
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col pb-4">
             {fieldsList}
-            <button className="btn btn-block">Sign up</button>
           </div>
+          <button className="btn btn-block">Sign up</button>
         </div>
       </div>
       <div className="text-center col-span-8">
