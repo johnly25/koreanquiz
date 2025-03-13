@@ -1,7 +1,9 @@
-
-import Image from 'next/image'
+import { AuthLayout } from "@/components/AuthLayout/AuthLayout";
 
 export default function page() {
+  const backgroundImageCSS = 'bg-[url(/assets/images/LSF1.png)]'
+  const headerLabel = 'Sign up'
+  const buttonLabel = "Sign up"
   const fields = [
     { label: 'Name', name: 'name', placeholder: '' },
     { label: 'Email', name: 'email', placeholder: '' },
@@ -16,21 +18,8 @@ export default function page() {
     </fieldset>)
 
   return (
-    <div className="flex-auto box-border grid grid-cols-12">
-      <div className="col-span-4 p-12 pt-24 flex flex-col items-center">
-        <div>
-          <div>
-            <p>Sign up section</p>
-          </div>
-          <div className="flex flex-col pb-4">
-            {fieldsList}
-          </div>
-          <button className="btn btn-block">Sign up</button>
-        </div>
-      </div>
-      <div className="text-center col-span-8">
-        <div className="bg-[url(/assets/images/LSF1.png)] min-h-full max-h-full"></div>
-      </div>
-    </div>
+    <AuthLayout buttonLabel={buttonLabel} headerLabel={headerLabel} backgroundImageCSS = {backgroundImageCSS} >
+      {fieldsList}
+    </AuthLayout>
   );
 }

@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 import "../styles/globals.css";
-// import "./globals.css";
 
 import { Container } from "@/components/Container/Container";
 
@@ -30,6 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Container>
@@ -37,5 +45,6 @@ export default function RootLayout({
         </Container>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

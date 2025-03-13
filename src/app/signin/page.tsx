@@ -1,23 +1,24 @@
+import { AuthLayout } from "@/components/AuthLayout/AuthLayout";
 
-export default function Home() {
+export default function page() {
+  const backgroundImageCSS = 'bg-[url(/assets/images/LSF2.webp)]'
+  const headerLabel = "Sign in"
+  const buttonLabel = "Sign in"
+  
+  const fields = [
+    { label: 'Username', name: 'username', placeholder: '' },
+    { label: 'Password', name: 'password', placeholder: '' },
+  ]
+
+  const fieldsList = fields.map(field =>
+    <fieldset key={field.label} className="fieldset w-72 my-0 py-0 pb-2">
+      <legend className="fieldset-legend py-0 pb-2">{field.label}</legend>
+      <input type="text" className="input" placeholder="Type here" />
+    </fieldset>)
+    
   return (
-    <div className="grid grid-cols-2 max-h-full" >
-      <div className="text-center">sign up section</div>
-      <div className="card bg-base-100 w-96 shadow-sm">
-        <figure>
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="Shoes" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">Card Title</h2>
-          <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
-          </div>
-        </div>
-      </div>
-      <div className="text-center">image secion</div>
-    </div>
+    <AuthLayout buttonLabel={buttonLabel} headerLabel={headerLabel} backgroundImageCSS={backgroundImageCSS} >
+      {fieldsList}
+    </AuthLayout>
   );
 }
