@@ -15,7 +15,7 @@ export function AuthLayout(props: AuthLayoutProps) {
                     <div>
                         <p>{props.headerLabel}</p>
                     </div>
-                    <div className="flex flex-col pb-4">
+                    <div className="flex flex-col pb-4 gap-2">
                         {props.children}
                     </div>
                     <button className="btn btn-block">{props.buttonLabel}</button>
