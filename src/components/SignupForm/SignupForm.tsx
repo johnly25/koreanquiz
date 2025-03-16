@@ -1,8 +1,7 @@
 'use client'
 
-import { useSignUp } from "@clerk/nextjs";
-// import { useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { SignUpResource } from "@clerk/types";
+import { SetStateAction, useState } from "react";
 
 interface signUpInfoType {
     name: string,
@@ -11,16 +10,19 @@ interface signUpInfoType {
     password: string
 }
 
-export function SignupForm({ setVerifying }) {
+interface signUpFormProps {
+    isLoaded: boolean,
+    signUp: SignUpResource | undefined,
+    setVerifying: React.Dispatch<SetStateAction<boolean>>
+}
+
+export function SignupForm({ isLoaded, signUp, setVerifying }: signUpFormProps) {
     const [signUpInfo, setSignUpInfo] = useState<signUpInfoType>({
         name: "",
         email: "",
         username: "",
         password: ""
     })
-
-    const { isLoaded, signUp, setActive } = useSignUp()
-    const [code, setCode] = useState('')
 
     const fields =
     {
@@ -42,26 +44,19 @@ export function SignupForm({ setVerifying }) {
 
         if (!isLoaded) return
         try {
-            const signupres = await signUp.create({
+            await signUp?.create({
                 emailAddress: signUpInfo.email,
                 password: signUpInfo.password,
                 username: signUpInfo.username,
                 firstName: signUpInfo.name
             })
 
-            console.log(signupres)
-            // Send the user an email with the verification code
-            await signUp.prepareEmailAddressVerification({
+            await signUp?.prepareEmailAddressVerification({
                 strategy: 'email_code',
             })
 
-            // Set 'verifying' true to display second form
-            // and capture the OTP code
             setVerifying(true)
-
         } catch (err: any) {
-            // See https://clerk.com/docs/custom-flows/error-handling
-            // for more info on error handling
             console.error(JSON.stringify(err, null, 2))
         }
     }
@@ -89,7 +84,16 @@ export function SignupForm({ setVerifying }) {
 
                 <fieldset key={fields.password.label} className="fieldset w-72 my-0 py-0 pb-2">
                     <legend className="fieldset-legend py-0 pb-2">{fields.password.label}</legend>
-                    <input type="text" className="input" placeholder="Type here" name={fields.password.name} value={signUpInfo[fields.password.name as keyof signUpInfoType]} onChange={handleChange} />
+                    <label className="input validator">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></g></svg>
+                        <input type="password" required placeholder="Password" minLength={8} name={fields.password.name} value={signUpInfo[fields.password.name as keyof signUpInfoType]} onChange={handleChange}  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
+                    </label>
+                    <p className="validator-hint hidden">
+                        Must be more than 8 characters, including
+                        <br />At least one number
+                        <br />At least one lowercase letter
+                        <br />At least one uppercase letter
+                    </p>
                 </fieldset>
             </div>
             <button className="btn btn-block" onClick={handleSubmit}>Sign up</button>

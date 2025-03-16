@@ -38,13 +38,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Container>
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           {children}
-        </Container>
-      </body>
-    </html>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

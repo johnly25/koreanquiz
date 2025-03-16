@@ -4,6 +4,6 @@ export default function page() {
 
 
   return (
-    <SignupLayout/>
+    <SignupLayout />
   );
 }
