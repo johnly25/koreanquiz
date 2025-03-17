@@ -1,34 +1,28 @@
-export function Navbar() {
-    const items = [
-        { link: '/', label: 'Home' },
-        { link: '/signup', label: 'Sign up' },
-        { link: '/signin', label: 'Sign in ' },
-    ]
+'use client'
 
-    const itemsLinks = items.map((item, index) =>
-        <a key={index} href={item.link} className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{item.label}</a>)
+import { useState } from "react";
 
-    return (<>
-        <nav className="bg-gray-800">
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className="relative flex h-16 items-center justify-between">
-                    <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                        <div className="flex shrink-0 items-center">
-                            {/* {<img
-                                className="h-8 w-auto"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Your Company"
-                            />} */}
-                        </div>
-                        <div className="hidden sm:ml-6 sm:block">
-                            <div className="flex space-x-4">
-                                {itemsLinks}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </>
+export function NavBar() {
+    const [expanded, setExpanded] = useState(false);
+  
+    const handleClick = () => {
+      setExpanded(!expanded)
+    }
+  
+    return (
+      <div className={`flex items-start min-h-screen ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+        <div className={`bg-blue-500 min-h-screen fixed top-0 overflow-x-hidden transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+          <button className="btn" onClick={handleClick}>Hello</button>
+          <div className="text-4xl mb-5">Title</div>
+          <div>{expanded ? "true" : "false"}</div>
+          <ul className="text-2xl flex flex-col gap-2">
+            <li className="flex gap-2"><span>ICON</span><a href="">Dashboarddaf</a></li>
+            <li className="flex gap-2"><span>ICON</span><a href="">Learn</a></li>
+            <li className="flex gap-2"><span>ICON</span><a href="">Quiz</a></li>
+            <li className="flex gap-2"><span>ICON</span><a href="">Shop</a></li>
+            <li className="flex gap-2"><span>ICON</span><a href="">Setting</a></li>
+          </ul>
+        </div>
+      </div >
     )
-}
+  }
