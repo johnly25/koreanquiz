@@ -6,9 +6,6 @@ import {
 import "../styles/globals.css";
 import "@radix-ui/themes/styles.css";
 
-import { Container } from "@/components/Container/Container";
-import { Theme } from "@radix-ui/themes";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

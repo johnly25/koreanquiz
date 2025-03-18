@@ -12,12 +12,12 @@ interface SignupLayout {
     backgroundImageCSS: string,
 }
 
-interface signUpInfoType {
-    name: string,
-    email: string,
-    username: string,
-    password: string
-}
+// interface signUpInfoType {
+//     name: string,
+//     email: string,
+//     username: string,
+//     password: string
+// }
 
 export function SignupLayout() {
     const { isLoaded, signUp, setActive } = useSignUp()
