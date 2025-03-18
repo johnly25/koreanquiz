@@ -1,7 +1,6 @@
 'use client'
 
 import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { SignupForm } from "../SignupForm/SignupForm";
 import { Verification } from "../Verification/Verification";
@@ -25,7 +24,7 @@ export function SignupLayout() {
     const [verifying, setVerifying] = useState(false)
 
     return (
-        <div className="flex-auto box-border grid grid-cols-12">
+        <div className="flex-auto flex min-h-screen box-border grid grid-cols-12">
             <div className="col-span-4 p-12 pt-24 flex flex-col items-center">
                 {!verifying ? <SignupForm isLoaded={isLoaded} signUp={signUp} setVerifying={setVerifying} /> : <Verification signUp={signUp} setActive={setActive} isLoaded={isLoaded}  setVerifying={setVerifying} />}
             </div>

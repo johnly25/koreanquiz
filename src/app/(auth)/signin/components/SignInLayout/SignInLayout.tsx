@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
 
-interface AuthLayoutProps {
+interface SignInLayoutProps {
     children: ReactNode,
     buttonLabel: string,
     headerLabel: string,
     backgroundImageCSS: string,
 }
 
-export function AuthLayout(props: AuthLayoutProps) {
+export function SignInLayout(props: SignInLayoutProps) {
     return (
-        <div className="flex-auto box-border grid grid-cols-12">
+        <div className="flex min-h-screen box-border grid grid-cols-12">
             <div className="col-span-4 p-12 pt-24 flex flex-col items-center">
                 <div>
                     <div>

@@ -1,4 +1,3 @@
-import { Container } from "@/components/Container/Container";
 import { NavBar } from "@/components/Navbar/Navbar";
 
 export default function Home() {
