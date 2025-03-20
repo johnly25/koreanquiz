@@ -9,7 +9,7 @@ interface SignInLayoutProps {
 
 export function SignInLayout(props: SignInLayoutProps) {
     return (
-        <div className="flex min-h-screen box-border grid grid-cols-12">
+        <div className="flex h-screen box-border grid grid-cols-12">
             <div className="col-span-4 p-12 pt-24 flex flex-col items-center">
                 <div>
                     <div>

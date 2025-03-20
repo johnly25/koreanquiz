@@ -14,19 +14,45 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int     @id @default(autoincrement())
+  clerkid  Int
+  email    String?
   name     String
   username String? @unique
-  password String?
-  posts    Post[]
+
+  scores UserQuiz[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+model UserQuiz {
+  id Int @id @default(autoincrement())
+  userid Int
+  user User @relation(fields: [userid], references: [id])
+  quizid Int
+  quiz Quiz @relation(fields: [quizid], references: [id])
+  score Int
+  timetaken DateTime @default(now())
+}
+
+model Quiz {
+  id Int @id @default(autoincrement())
+  name String 
+  questions Question[]
+  scores UserQuiz[]
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+  question String
+  questionType String
+  quizid Int
+  quiz Quiz @relation(fields: [quizid], references: [id])
+  choices Choice[]
+}
+
+model Choice {
+  id Int @id @default(autoincrement())
+  questionId Int
+  qusetion Question @relation(fields: [questionId], references: [id])
+  choice String
+  isCorrect Boolean
 }
