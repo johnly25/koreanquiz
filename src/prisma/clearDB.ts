@@ -1,11 +1,11 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { prisma } from "./prisma";
 
-const prisma = new PrismaClient()
-
-const clearDB = async () => {
-    await prisma.user.deleteMany()
+export const clearDB = async () => {
+    await prisma.questionChoice.deleteMany()
+    await prisma.question.deleteMany()
+    await prisma.choice.deleteMany()
+    await prisma.questionChoice.deleteMany()
+    await prisma.quiz.deleteMany()
+    await prisma.userQuiz.deleteMany
 }
-
-console.log('clearing database')
-
 clearDB();

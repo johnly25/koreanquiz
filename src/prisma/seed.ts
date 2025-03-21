@@ -1,43 +1,44 @@
-// import { prisma } from "./prisma"
-import
-const prisma = new
-const userData: Prisma.UserCreateInput[] = [
+import { PrismaClient, Prisma } from '@prisma/client'
+
+const prisma = new PrismaClient()
+const questionData: Prisma.QuestionCreateInput[] = [
     {
-        name: 'Alice',
-        email: 'alice@prisma.io',
-        // posts: {
-        //     create: [
-        //         {
-        //             title: 'Join the Prisma Discord',
-        //             content: 'https://pris.ly/discord',
-        //             published: true,
-        //         },
-        //         {
-        //             title: 'Prisma on YouTube',
-        //             content: 'https://pris.ly/youtube',
-        //         },
-        //     ],
-        // },
+        question: 'what is 2 + 2?'
     },
     {
-        name: 'Bob',
-        email: 'bob@prisma.io',
-        // posts: {
-        //     create: [
-        //         {
-        //             title: 'Follow Prisma on Twitter',
-        //             content: 'https://www.twitter.com/prisma',
-        //             published: true,
-        //         },
-        //     ],
-        // },
+        question: 'what is 2 + 3?'
     }
 ]
 
+const choiceData: Prisma.ChoiceCreateInput[] = [
+    {
+        choice: '4',
+    },
+    {
+        choice: '1',
+    },
+    {
+        choice: '3',
+    },
+    {
+        choice: '1',
+    },
+]
+
+const questionChoice: Prisma.QuestionChoiceCreateInput[] = [
+    {
+        ,
+    },
+]
+
 export async function main() {
-    for (const u of userData) {
-        await prisma.user.create({ data: u })
+    for (const data of questionData) {
+        await prisma.question.create({ data: data })
     }
+    for (const data of choiceData) {
+        await prisma.choice.create({ data: data })
+    }
+}
 }
 
 main()

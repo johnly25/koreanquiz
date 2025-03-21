@@ -14,45 +14,51 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
+  id       Int        @id @default(autoincrement())
   clerkid  Int
   email    String?
   name     String
-  username String? @unique
-
-  scores UserQuiz[]
+  username String?    @unique
+  scores   UserQuiz[]
 }
 
 model UserQuiz {
-  id Int @id @default(autoincrement())
-  userid Int
-  user User @relation(fields: [userid], references: [id])
-  quizid Int
-  quiz Quiz @relation(fields: [quizid], references: [id])
-  score Int
+  id        Int      @id @default(autoincrement())
+  userid    Int
+  user      User     @relation(fields: [userid], references: [id])
+  quizid    Int
+  quiz      Quiz     @relation(fields: [quizid], references: [id])
+  score     Int
   timetaken DateTime @default(now())
 }
 
 model Quiz {
-  id Int @id @default(autoincrement())
-  name String 
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
   questions Question[]
-  scores UserQuiz[]
+  scores    UserQuiz[]
 }
 
 model Question {
-  id Int @id @default(autoincrement())
-  question String
-  questionType String
-  quizid Int
-  quiz Quiz @relation(fields: [quizid], references: [id])
-  choices Choice[]
+  id              Int              @id @default(autoincrement())
+  question        String           @unique
+  questionType    String?
+  quizid          Int?
+  quiz            Quiz?            @relation(fields: [quizid], references: [id])
+  QuestionChoices QuestionChoice[]
+}
+
+model QuestionChoice {
+  id         Int      @id @default(autoincrement())
+  choiceid   Int
+  choice     Choice   @relation(fields: [choiceid], references: [id])
+  questionid Int
+  question   Question @relation(fields: [questionid], references: [id])
+  isCorrect  Boolean
 }
 
 model Choice {
-  id Int @id @default(autoincrement())
-  questionId Int
-  qusetion Question @relation(fields: [questionId], references: [id])
-  choice String
-  isCorrect Boolean
+  id              Int              @id @default(autoincrement())
+  choice          String           @unique
+  QuestionChoices QuestionChoice[]
 }
