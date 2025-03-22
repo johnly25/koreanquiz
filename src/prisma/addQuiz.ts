@@ -1,6 +1,7 @@
 import { PrismaClient, Prisma } from '@prisma/client'
 import { clearDB } from "./clearDB";
 import { prisma } from './prisma';
+import { create } from 'domain';
 
 const quizData: Prisma.QuizCreateInput[] = [
     {
@@ -68,97 +69,53 @@ const createQuestions = async () => {
     for (const data of koreanLetterData) {
         await prisma.koreanAlphabet.create({ data: data })
     }
-    const koreanVowels: Prisma.KoreanAlphabetCreateInput[] = await prisma.koreanAlphabet.findMany()
+    const koreanVowels = await prisma.koreanAlphabet.findMany({ where: { isVowel: true } })
     const questionVowelData: Prisma.QuestionCreateInput[] = koreanVowels.map(element => {
         const question = 'What is the romanization of ' + element.letter
         const answer = element.romanization
         const quiz = 'Korean Vowels'
         return { question, answer, quiz: { connect: { name: quiz } } }
     })
-    
+
     for (const data of questionVowelData) {
         await prisma.question.create({ data: data })
     }
 
-    // put mark all letters as choice
-    for (const vowel of koreanVowels) {
-        await prisma.choice.create({
-            data: {
-                choice: vowel.letter
-            }
-        })
-    }
+    // put all letters as choice
+    // for (const vowel of koreanVowels) {
+    //     await prisma.choice.create({
+    //         data: {
+    //             choice: vowel.romanization
+    //         }
+    //     })
+    // }
 
-    // get vowel questions 
-    const {questions: aldkfjksajdf} = await prisma.quiz.findUnique({
+    const { questions: vowelQuestions } = await prisma.quiz.findUnique({
         where: { name: 'Korean Vowels' },
-        include: { questions: true }
+        include: {
+            questions: {
+                include: {
+                    QuestionChoice: true
+                }
+            }
+        }
     })
-    console.log(aldkfjksajdf)
-    
-    // await prisma.questionChoice.create({
-    //     data: {
-    //        choice: { connect: vowel.letter}
-    //        question: {connect: }
-    //     }
-    // })
-    // put all letters as choices for vowels questions
 
-
+    for (const question of vowelQuestions) {
+        const questionid = question.id
+        const questionanswer = question.answer
+        const filterCorrectAnswer = koreanVowels.filter(vowel => vowel.romanization != questionanswer)
+        for (const vowel of filterCorrectAnswer) {
+            await prisma.questionChoice.create({
+                data: {
+                    choice: { connectOrCreate: { where: { choice: vowel.romanization }, create: { choice: vowel.romanization } } },
+                    question: { connect: { id: questionid } }
+                }
+            })
+        }
+    }
 }
 
-// [
-//     {
-//         question: 'What is the romanization of ㅏ?',
-//         answer: 'a',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅐ?',
-//         answer: 'ae',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅑ?',
-//         answer: 'ya',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅒ?',
-//         answer: 'yae',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅓ?',
-//         answer: 'eo',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅔ?',
-//         answer: 'e',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅕ?',
-//         answer: 'yeo',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅖ?',
-//         answer: 'ye',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅗ?',
-//         answer: 'o',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-//     {
-//         question: 'What is the romanization of ㅗ?',
-//         answer: 'o',
-//         quiz: { connect: { name: 'Korean Vowels' } },
-//     },
-// ]
 
 
 

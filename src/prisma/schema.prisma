@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -40,20 +41,20 @@ model Quiz {
 }
 
 model Question {
-  id           Int     @id @default(autoincrement())
-  question     String  @unique
-  questionType String?
-  quizid       Int?
-  quiz         Quiz?   @relation(fields: [quizid], references: [id])
-  answer       String
+  id             Int              @id @default(autoincrement())
+  question       String           @unique
+  questionType   String?
+  quizid         Int?
+  quiz           Quiz?            @relation(fields: [quizid], references: [id])
+  answer         String?
   QuestionChoice QuestionChoice[]
 }
 
 model KoreanAlphabet {
-  id Int @id @default(autoincrement())
-  letter String
+  id           Int     @id @default(autoincrement())
+  letter       String
   romanization String
-  isVowel Boolean
+  isVowel      Boolean
 }
 
 model QuestionChoice {
