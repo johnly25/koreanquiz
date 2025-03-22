@@ -40,12 +40,20 @@ model Quiz {
 }
 
 model Question {
-  id              Int              @id @default(autoincrement())
-  question        String           @unique
-  questionType    String?
-  quizid          Int?
-  quiz            Quiz?            @relation(fields: [quizid], references: [id])
-  QuestionChoices QuestionChoice[]
+  id           Int     @id @default(autoincrement())
+  question     String  @unique
+  questionType String?
+  quizid       Int?
+  quiz         Quiz?   @relation(fields: [quizid], references: [id])
+  answer       String
+  QuestionChoice QuestionChoice[]
+}
+
+model KoreanAlphabet {
+  id Int @id @default(autoincrement())
+  letter String
+  romanization String
+  isVowel Boolean
 }
 
 model QuestionChoice {
@@ -54,7 +62,6 @@ model QuestionChoice {
   choice     Choice   @relation(fields: [choiceid], references: [id])
   questionid Int
   question   Question @relation(fields: [questionid], references: [id])
-  isCorrect  Boolean
 }
 
 model Choice {
