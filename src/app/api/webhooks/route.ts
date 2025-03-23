@@ -69,6 +69,5 @@ export async function POST(req: Request) {
     })
     console.log('user created!')
   }
-
   return new Response('Webhook received', { status: 200 })
 }
