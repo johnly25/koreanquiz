@@ -69,6 +69,7 @@ const createQuestions = async () => {
     for (const data of koreanLetterData) {
         await prisma.koreanAlphabet.create({ data: data })
     }
+    
     const koreanVowels = await prisma.koreanAlphabet.findMany({ where: { isVowel: true } })
     const questionVowelData: Prisma.QuestionCreateInput[] = koreanVowels.map(element => {
         const question = 'What is the romanization of ' + element.letter
@@ -80,15 +81,6 @@ const createQuestions = async () => {
     for (const data of questionVowelData) {
         await prisma.question.create({ data: data })
     }
-
-    // put all letters as choice
-    // for (const vowel of koreanVowels) {
-    //     await prisma.choice.create({
-    //         data: {
-    //             choice: vowel.romanization
-    //         }
-    //     })
-    // }
 
     const { questions: vowelQuestions } = await prisma.quiz.findUnique({
         where: { name: 'Korean Vowels' },
@@ -115,9 +107,6 @@ const createQuestions = async () => {
         }
     }
 }
-
-
-
 
 const main = async () => {
     console.log('clearing db')
