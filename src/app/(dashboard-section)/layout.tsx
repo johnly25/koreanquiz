@@ -9,7 +9,8 @@ export default function Layout({
         <div className="flex">
             <NavBar />
             <div className="flex-1">
-                <div className="h-screen text-4xl" >{children}</div>
+                {/* <div className='flex bg-red-500 h-[48px]'>Navbar 2</div> */}
+                <div className="h-screen" >{children}</div>
             </div>
         </div >
     )

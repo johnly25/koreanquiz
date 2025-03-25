@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import { useState } from "react";
 import { useContext } from 'react';
 import { createContext } from 'react';
@@ -8,7 +8,7 @@ import { createContext } from 'react';
 export const SideBarContext = createContext(true);
 
 const navItems = [
-    { icon: 'ICON', label: 'Dashboard', path: '' },
+    { icon: 'ICON', label: 'Dashboard', path: '/dashboard' },
     { icon: 'ICON', label: 'Learn', path: '' },
     { icon: 'ICON', label: 'Quiz', path: '' },
     { icon: 'ICON', label: 'Sign up', path: '/signup' },
@@ -20,16 +20,21 @@ const navItems = [
 const Menu = () => {
     const expanded = useContext(SideBarContext)
     const { isSignedIn } = useAuth();
+    const { signOut } = useClerk()
 
     const menuItems = navItems.map(item => {
         if (!(isSignedIn && (item.label == 'Sign in' || item.label == 'Sign up'))) {
             return <li key={item.label} className='flex gap-2'><span>{item.icon}</span>{expanded && <a href={item.path}>{item.label}</a>}</li>
-        } 
+        }
     })
+    const logout = () => {
+        signOut()
+    }
 
     return (
         <ul className={`text-2xl flex flex-col gap-2  ${expanded ? "items-start" : "items-center"}`}>
             {menuItems}
+            {isSignedIn && <li onClick={logout}>Log out</li>}
         </ul>
     )
 }
@@ -70,8 +75,8 @@ export function NavBar() {
     }
 
     return (
-        <div className={`bg-blue-500 min-h-screen transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
-            <div className={`overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+        <div className={` min-h-screen transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+            <div className={`bg-blue-500 overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
                 <Toggle />
                 <div className="text-4xl mb-5">Title</div>
                 <div>{expanded ? "true" : "false"}</div>
