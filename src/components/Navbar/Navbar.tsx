@@ -10,7 +10,7 @@ export const SideBarContext = createContext(true);
 const navItems = [
     { icon: 'ICON', label: 'Dashboard', path: '/dashboard' },
     { icon: 'ICON', label: 'Learn', path: '' },
-    { icon: 'ICON', label: 'Quiz', path: '' },
+    { icon: 'ICON', label: 'Quiz', path: '/quizzes' },
     { icon: 'ICON', label: 'Sign up', path: '/signup' },
     { icon: 'ICON', label: 'Sign in', path: '/signin' },
     { icon: 'ICON', label: 'Shop', path: '' },
@@ -70,12 +70,11 @@ export function NavBar() {
                     </svg>
                 </label>
             </div>
-
         )
     }
 
     return (
-        <div className={` min-h-screen transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+        <div className={` bg-blue-500 flex items-start min-h-screen transition-all duration-500 ease-in-out ${expanded ? "w-[256px] min-w-[256px]" : "w-[64px] min-w-[64px]"}`}>
             <div className={`bg-blue-500 overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
                 <Toggle />
                 <div className="text-4xl mb-5">Title</div>
