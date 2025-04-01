@@ -1,11 +1,12 @@
 'use client'
-
-import { useAuth, useClerk } from "@clerk/nextjs";
+import { useUser } from "@/providers/UserProvider";
+import { useAuth } from "@clerk/nextjs";
+import Link from "next/link";
 import { useState } from "react";
 import { useContext } from 'react';
 import { createContext } from 'react';
-
 export const SideBarContext = createContext(true);
+import { useRouter } from "next/navigation"
 
 const navItems = [
     { icon: 'ICON', label: 'Dashboard', path: '/dashboard' },
@@ -19,16 +20,18 @@ const navItems = [
 
 const Menu = () => {
     const expanded = useContext(SideBarContext)
-    const { isSignedIn } = useAuth();
-    const { signOut } = useClerk()
+    const { isSignedIn, loading } = useUser()
+    const { signOut } = useAuth()
+    const router = useRouter()
 
-    const menuItems = navItems.map(item => {
-        if (!(isSignedIn && (item.label == 'Sign in' || item.label == 'Sign up'))) {
-            return <li key={item.label} className='flex gap-2'><span>{item.icon}</span>{expanded && <a href={item.path}>{item.label}</a>}</li>
+    const menuItems = navItems.map((item, index) => {
+        if (!loading && !(isSignedIn && (item.label == 'Sign in' || item.label == 'Sign up'))) {
+            return <li key={index} className='flex gap-2'><span>{item.icon}</span>{expanded && <Link href={item.path}>{item.label}</Link>}</li>
         }
     })
+
     const logout = () => {
-        signOut()
+        signOut({ redirectUrl: '/dashboard' })
     }
 
     return (
@@ -78,7 +81,6 @@ export function NavBar() {
             <div className={`bg-blue-500 overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
                 <Toggle />
                 <div className="text-4xl mb-5">Title</div>
-                <div>{expanded ? "true" : "false"}</div>
                 <SideBarContext value={expanded}>
                     <Menu />
                 </SideBarContext>

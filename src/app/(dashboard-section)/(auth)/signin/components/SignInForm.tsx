@@ -1,5 +1,6 @@
 'use client'
-import { useSignIn } from "@clerk/nextjs"
+// import { useAuth } from "@/providers/authcontext"
+import { useSession, useSignIn,  } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 
@@ -8,11 +9,9 @@ export function SignInForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+    
+    const handleSubmit = async () => {
         if (!isLoaded) return
-
         try {
             const signInAttempt = await signIn.create({
                 identifier: email,
@@ -20,7 +19,7 @@ export function SignInForm() {
             })
             if (signInAttempt.status === 'complete') {
                 await setActive({ session: signInAttempt.createdSessionId })
-                router.push('/')
+                router.push('/dashboard')
             } else {
                 // If the status is not complete, check why. User may need to
                 // complete further steps.

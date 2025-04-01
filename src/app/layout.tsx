@@ -5,6 +5,7 @@ import {
 } from '@clerk/nextjs'
 import "../styles/globals.css";
 import "@radix-ui/themes/styles.css";
+import UserProvider from "@/providers/UserProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <UserProvider>
+        <html lang="en">
+          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             {children}
-        </body>
-      </html>
+          </body>
+        </html>
+      </UserProvider>
     </ClerkProvider>
   );
 }
