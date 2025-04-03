@@ -14,8 +14,8 @@ export function Quiz({ questions }: QuizProps) {
         totalCorrect: 0,
         currentQuestion: 0,
     })
-    
-    const totalPercent = Math.round((quiz.currentQuestion/quiz.totalQuestions) * 100)
+
+    const totalPercent = Math.round((quiz.currentQuestion / quiz.totalQuestions) * 100)
     const [quizOver, setQuizOver] = useState(false)
 
     const incrementScore = () => {
@@ -42,10 +42,15 @@ export function Quiz({ questions }: QuizProps) {
     }
 
     return (
-        <>
-            <progress className="progress progress-accent w-200" value={totalPercent} max="100"></progress>
-            {<div>{quiz.currentQuestion + 1} of {quiz.totalQuestions}</div>}
+        <div className="grid grid-rows-[100px_1fr] grid-cols-[100%]; h-screen">
+            <div className="flex gap-4">
+                <div className="flex justify-center items-center"><Link href='/quizzes'><button className="btn">Exit</button></Link></div>
+                <div className="flex flex-1 justify-center items-center">
+                    <progress className="progress progress-accent w-full max-w-200 h-6" value={totalPercent} max="100"></progress>
+                </div>
+                <div className="flex justify-center items-center">{quiz.currentQuestion + 1} of {quiz.totalQuestions}</div>
+            </div>
             {<Question question={questions[quiz.currentQuestion]} nextQuestion={nextQuestion} incrementScore={incrementScore} />}
-        </>
+        </div>
     )
 }

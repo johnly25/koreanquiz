@@ -17,21 +17,14 @@ export default async function quizzesPage() {
 
     )
 
-
-    // adding width fucks with flow
-    //align items changes and fucks width 
     return (
-        // <div className="bg-red-500 flex flex-col h-screen">
-        //     <div className="flex justify-center bg-orange-500"><div className="text-2xl">Quiz Section</div></div>
         <div className="flex flex-col">
-            <div className="bg-orange-500 flex justify-center">Quiz Section</div>
-
-            <div className="flex flex-col bg-yellow-500">
-                <div className="flex flex-col items-center bg-red-500 gap-4 p-4">
+            <div className="flex justify-center">Quiz Section</div>
+            <div className="flex flex-col">
+                <div className="flex flex-col items-center gap-4 p-4">
                     {cards}
                 </div>
             </div>
         </div>
-        // </div>
     )
 }
