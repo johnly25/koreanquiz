@@ -1,6 +1,23 @@
 @import "tailwindcss";
+
+
 @plugin "daisyui" {
   themes: light --default, dark;
   root: ":root";
   logs: true;
+}
+
+@theme {
+  --font-triangle: var(--font-dinround);
+  --color-mint-500: oklch(0.72 0.11 200);
+  --font-poppins: Poppins, sans-serif;
+  --color-starplatinum: #C4BCEF;
+}
+
+.jojo {
+  --color-starplatinum: #C4BCEF;
+}
+
+.dio {
+  --color-starplatinum: #e1d068;
 }

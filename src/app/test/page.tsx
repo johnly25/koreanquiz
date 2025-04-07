@@ -1,4 +1,4 @@
-import { NavBar } from "@/components/Navbar/Navbar"
+import { NavBar } from "@/components/Sidebar/Sidebar"
 //test
 export default function page() {
   return (

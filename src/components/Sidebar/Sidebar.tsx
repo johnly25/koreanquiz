@@ -2,11 +2,8 @@
 import { useUser } from "@/providers/UserProvider";
 import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
-import { useState } from "react";
-import { useContext } from 'react';
-import { createContext } from 'react';
-export const SideBarContext = createContext(true);
 import { useRouter } from "next/navigation"
+import { useSideBar } from "@/providers/SideBarProvider";
 
 const navItems = [
     { icon: 'ICON', label: 'Dashboard', path: '/dashboard' },
@@ -19,7 +16,7 @@ const navItems = [
 ]
 
 const Menu = () => {
-    const expanded = useContext(SideBarContext)
+    const { expanded } = useSideBar()
     const { isSignedIn, loading } = useUser()
     const { signOut } = useAuth()
     const router = useRouter()
@@ -42,8 +39,8 @@ const Menu = () => {
     )
 }
 
-export function NavBar() {
-    const [expanded, setExpanded] = useState(true);
+export function Sidebar() {
+    const {expanded, setExpanded} = useSideBar();
 
     const handleClick = () => {
         setExpanded(!expanded)
@@ -77,14 +74,10 @@ export function NavBar() {
     }
 
     return (
-        <div className={` bg-blue-500 flex items-start min-h-screen transition-all duration-500 ease-in-out ${expanded ? "w-[256px] min-w-[256px]" : "w-[64px] min-w-[64px]"}`}>
-            <div className={`bg-blue-500 overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
-                <Toggle />
-                <div className="text-4xl mb-5">Title</div>
-                <SideBarContext value={expanded}>
-                    <Menu />
-                </SideBarContext>
-            </div>
-        </div >
+        <div className={`pl-4 bg-starplatinum  font-[400] overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+            <Toggle />
+            <div className="text-4xl mb-5">Title</div>
+            <Menu />
+        </div>
     )
 }

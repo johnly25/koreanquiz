@@ -110,7 +110,8 @@ const createQuestions = async () => {
 
 const main = async () => {
     console.log('clearing db')
-    await clearDB();
+    //only clear quizes and questions 
+    // await clearDB();
     console.log('cleared')
 
     for (const data of quizData) {

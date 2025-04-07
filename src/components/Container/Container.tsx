@@ -1,4 +1,4 @@
-import { Navbar } from "../Navbar/Navbar";
+import { Navbar } from "../Sidebar/Sidebar";
 
 export function Container({ children }: { children: React.ReactNode }) {
     return (

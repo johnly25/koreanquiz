@@ -1,17 +1,18 @@
-import { NavBar } from "@/components/Navbar/Navbar"
+import { Main } from "@/components/Main/Main"
+import { Sidebar } from "@/components/Sidebar/Sidebar"
+import { useSideBar } from "@/providers/SideBarProvider"
 
 export default function Layout({
     children,
 }: {
     children: React.ReactNode
 }) {
-
     return (
         <div className="flex">
-            <NavBar />
-            <div className="flex-1 h-screen">
+            <Sidebar />
+            <Main>
                 {children}
-            </div>
-        </div >
+            </Main>
+        </div>
     )
 }
