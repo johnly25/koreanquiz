@@ -4,26 +4,31 @@ import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { useRouter } from "next/navigation"
 import { useSideBar } from "@/providers/SideBarProvider";
+import { House, Settings, BookOpenCheck, UserRoundPlus, ShoppingBag, LogIn, LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation'
 
+const navItemStyle = "w-[28px] h-[38px]"
 const navItems = [
-    { icon: 'ICON', label: 'Dashboard', path: '/dashboard' },
-    { icon: 'ICON', label: 'Learn', path: '' },
-    { icon: 'ICON', label: 'Quiz', path: '/quizzes' },
-    { icon: 'ICON', label: 'Sign up', path: '/signup' },
-    { icon: 'ICON', label: 'Sign in', path: '/signin' },
-    { icon: 'ICON', label: 'Shop', path: '' },
-    { icon: 'ICON', label: 'Setting', path: '' },
+    { icon: <House className={navItemStyle} />, label: 'Dashboard', path: '/dashboard' },
+    { icon: <BookOpenCheck className={navItemStyle} />, label: 'Quiz', path: '/quizzes' },
+    { icon: <UserRoundPlus className={navItemStyle} />, label: 'Sign up', path: '/signup' },
+    { icon: <LogIn className={navItemStyle} />, label: 'Sign in', path: '/signin' },
+    { icon: <ShoppingBag className={navItemStyle} />, label: 'Shop', path: '' },
+    { icon: <Settings className={navItemStyle} />, label: 'Setting', path: '' },
 ]
 
 const Menu = () => {
+    const pathname = usePathname()
     const { expanded } = useSideBar()
     const { isSignedIn, loading } = useUser()
     const { signOut } = useAuth()
     const router = useRouter()
-
+    console.log(pathname)
+    // pathname is the same as path then active state == true
+    
     const menuItems = navItems.map((item, index) => {
         if (!loading && !(isSignedIn && (item.label == 'Sign in' || item.label == 'Sign up'))) {
-            return <li key={index} className='flex gap-2'><span>{item.icon}</span>{expanded && <Link href={item.path}>{item.label}</Link>}</li>
+            return <li key={index} className={`flex justify-center items-center gap-2 hover:bg-primary-400 active:bg-primary-600 ${pathname == item.path && 'bg-primary-700'}`}><div>{item.icon}</div>{expanded && <Link href={item.path}><div className="">{item.label}</div></Link>}</li>
         }
     })
 
@@ -32,15 +37,16 @@ const Menu = () => {
     }
 
     return (
-        <ul className={`text-2xl flex flex-col gap-2  ${expanded ? "items-start" : "items-center"}`}>
+        <ul className={`text-3xl flex flex-col gap-4  ${expanded ? "items-start" : "items-center"}`}>
             {menuItems}
-            {isSignedIn && <li onClick={logout}>Log out</li>}
+            {isSignedIn &&
+                <li className="flex justify-center items-center gap-2 hover:bg-primary-400" onClick={logout}><div><LogOut className={navItemStyle} /></div><div className="flex justify-center items-center">Log out</div></li>}
         </ul>
     )
 }
 
 export function Sidebar() {
-    const {expanded, setExpanded} = useSideBar();
+    const { expanded, setExpanded } = useSideBar();
 
     const handleClick = () => {
         setExpanded(!expanded)
@@ -74,7 +80,7 @@ export function Sidebar() {
     }
 
     return (
-        <div className={`pl-4 bg-starplatinum  font-[400] overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
+        <div className={`pl-4 bg-primary-500 font-[400] overflow-x-hidden h-full fixed top-0 transition-all duration-500 ease-in-out ${expanded ? "w-[256px]" : "w-[64px]"}`}>
             <Toggle />
             <div className="text-4xl mb-5">Title</div>
             <Menu />

@@ -9,7 +9,7 @@ export function Main({
     const { expanded } = useSideBar()
 
     return (
-        <div className={`dark:bg-gray-800 flex-1 h-screen transition-all duration-500 ease-in-out ${expanded ? 'ml-[256px]' : 'ml-[64px]'}`}>
+        <div className={`flex-1 h-screen transition-all duration-500 ease-in-out ${expanded ? 'ml-[256px]' : 'ml-[64px]'}`}>
             {children}
         </div>
     )

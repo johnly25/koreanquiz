@@ -9,7 +9,7 @@ export default async function quizzesPage() {
                     <h2 className="card-title">{quiz.name}</h2>
                     <p>Description: </p>
                     <div className="justify-end card-actions">
-                        <a href={'/quiz/' + quiz.id}><button className="btn btn-primary">Take Quiz</button></a>
+                        <a href={'/quiz/' + quiz.id}><button className="btn bg-primary-500">Take Quiz</button></a>
                     </div>
                 </div>
             </div>

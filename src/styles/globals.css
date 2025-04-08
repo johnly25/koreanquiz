@@ -12,6 +12,15 @@
   --color-mint-500: oklch(0.72 0.11 200);
   --font-poppins: Poppins, sans-serif;
   --color-starplatinum: #C4BCEF;
+  --color-primary-100: #D6EAFF;
+  --color-primary-200: #C2DBFF;
+  --color-primary-300: #98C3FF;
+  --color-primary-400: #70ACFF;
+  --color-primary-500: #4793FF;
+  --color-primary-600: #1F7CFF;
+  --color-primary-700: #0066F5;
+  --color-primary-800: #0055CC;
+  --color-primary-900: #013B8F;
 }
 
 .jojo {
